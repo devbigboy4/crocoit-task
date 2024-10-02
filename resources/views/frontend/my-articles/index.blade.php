@@ -26,7 +26,7 @@
 
                         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
 
-                            {!! $article->description  !!}
+                            {!! $article->description !!}
                         </p>
                     </div>
 
@@ -56,12 +56,18 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#"
+                                    <a href="{{ route('articles.edit', $article->id) }}"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Edit</a>
                                 </li>
+
                                 <li>
-                                    <a href="#"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+                                    <form action="{{ route('articles.destroy', $article->id) }}"method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <a href="{{ route('articles.destroy', $article->id) }}"
+                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                            onclick="event.preventDefault(); this.closest('form').submit();">Delete</a>
+                                    </form>
                                 </li>
                             </ul>
                         </div>

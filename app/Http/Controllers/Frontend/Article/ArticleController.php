@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Frontend\Article;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Fronend\ArticleStoreRequest;
+use App\Http\Requests\Fronend\ArticleUpdateRequest;
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\User;
 use App\Traits\FileControlTrait;
-use Illuminate\Http\Request;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -15,13 +17,6 @@ class ArticleController extends Controller
 {
 
     use FileControlTrait;
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -103,7 +98,7 @@ class ArticleController extends Controller
             ->limit(4)
             ->get();
 
-        return view('frontend.articles.show', compact('article','related_articles'));
+        return view('frontend.articles.show', compact('article', 'related_articles'));
     }
 
     /**
@@ -111,22 +106,119 @@ class ArticleController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $article = Article::with('categories')->findOrFail($id);
+
+        if ($article->user_id != Auth::id()) {
+            $notification = [
+                'message' => "Something went wrong!",
+                'alert-type' => 'error',
+            ];
+            // Return with error notification
+            return redirect()->back()->with($notification);
+        }
+
+        $categories = Category::whereNull('parent_id')
+            ->with('children')
+            ->get();
+
+        $selectedCategories = $article->categories->pluck('id')->toArray();
+
+        return view('frontend.articles.edit', compact('article', 'categories', 'selectedCategories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ArticleUpdateRequest $request, Article $article)
     {
-        //
+
+        if ($article->user_id != Auth::id()) {
+            $notification = [
+                'message' => "Something went wrong!",
+                'alert-type' => 'error',
+            ];
+            // Return with error notification
+            return redirect()->back()->with($notification);
+        }
+        try {
+
+            DB::beginTransaction();
+
+            $data = $request->validated();
+
+            if ($request->hasFile('image')) {
+                $this->deleteFile($article->image);
+                $data['data'] = $this->uploadFile($request->file('image'), 'articles');
+            }
+
+            $article->update($data);
+
+            if ($request->has('categories_ids')) {
+                $article->categories()->sync($request->input('categories_ids'));
+            } else {
+                // If no facilities are selected, remove all facilities associated with the room
+                $article->categories()->sync([]);
+            }
+
+            DB::commit();
+
+            $notification = [
+                'message' => 'Article Updated successfully!',
+                'alert-type' => 'success',
+            ];
+
+            return redirect()->route('articles.edit', $article->id)->with($notification);
+
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            $notification = [
+                'message' => "Something went wrong! Please try again.'",
+                'alert-type' => 'error',
+            ];
+            // Return with error notification
+            return redirect()->back()->with($notification);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Article $article)
     {
-        //
+        try {
+            $user = User::find(Auth::user()->id);
+            if (!$user || $user->id != $article->user_id) {
+                $notification = [
+                    'message' => "Something went wrong!",
+                    'alert-type' => 'error',
+                ];
+                // Return with error notification
+                return redirect()->back()->with($notification);
+            }
+
+            $this->deleteFile($article->image);
+
+
+            $article->categories()->detach();
+
+            $article->delete();
+
+          $notification = [
+                'message' => "Article deleted suceess'",
+                'alert-type' => 'success',
+            ];
+            // Return with error notification
+            return redirect()->back()->with($notification);
+
+        } catch (Exception $e) {
+
+             $notification = [
+                'message' => "Something went wrong! Please try again.'",
+                'alert-type' => 'error',
+            ];
+            // Return with error notification
+            return redirect()->back()->with($notification);
+        }
     }
 }
