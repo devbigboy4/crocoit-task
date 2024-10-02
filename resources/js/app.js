@@ -19,22 +19,32 @@ Alpine.start();
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    const dropdownButton = document.getElementById('dropdownButton');
-    const dropdownMenu = document.getElementById('dropdown');
+    const dropdownButtons = document.querySelectorAll('[data-dropdown-toggle]');
 
-    // Toggle dropdown visibility
-    dropdownButton.addEventListener('click', function (event) {
-        event.stopPropagation(); // Prevent the parent link from triggering
-        dropdownMenu.classList.toggle('hidden');
+    // Iterate through all dropdown buttons
+    dropdownButtons.forEach(function (button) {
+        const dropdownId = button.getAttribute('data-dropdown-toggle');
+        const dropdownMenu = document.getElementById(dropdownId);
+
+        // Toggle dropdown visibility when button is clicked
+        button.addEventListener('click', function (event) {
+            event.stopPropagation();
+            dropdownMenu.classList.toggle('hidden');
+        });
     });
 
-    // Close dropdown when clicking outside of it
+    // Close dropdown when clicking outside any dropdown menu
     document.addEventListener('click', function (e) {
-        if (!dropdownMenu.classList.contains('hidden')) {
-            dropdownMenu.classList.add('hidden');
-        }
+        dropdownButtons.forEach(function (button) {
+            const dropdownId = button.getAttribute('data-dropdown-toggle');
+            const dropdownMenu = document.getElementById(dropdownId);
+            if (!dropdownMenu.classList.contains('hidden')) {
+                dropdownMenu.classList.add('hidden');
+            }
+        });
     });
 });
+
 
 
 $(document).ready(function() {

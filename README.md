@@ -1,66 +1,116 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# 📦 CrocoIt Task
 
-## About Laravel
+Welcome to the **CrocoIt Task** project! This is a robust and scalable task designed for a Manage Articles platform built with Laravel. 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🛠 Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Multi-Role Authentication**: Facilitated distinct access levels for users, admins.
+- **Category and Tag Management**: Manage Articles categories and Categories.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 📜 Technologies Used
 
-## Learning Laravel
+- **Laravel**: The PHP framework used for building the task.
+- **MySQL**: Database management system.
+- **Git**: Version Controller
+- **Linux**: Operating System.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## 🗂 Database Schema
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+The database consists of the following tables:
 
-## Laravel Sponsors
+- **Users**: 
+- **Admins**: 
+- **Categories**: 
+- **Articles**: 
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🔗 API Routes
 
-### Premium Partners
+### Auth Routes
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- **USer Routes**:
+  - `POST /login`: Login
+  - `POST /register/user`: Register user
+  - `POST /register/admin`: Register admin
+  - `POST /password/forgot`: Forgot Password
+  - `POST /password/reset`: Reset Password
 
-## Contributing
+- **Authenticated Routes**:
+  - `POST /auth/logout`: Logout
+  - `GET /auth/profile`: View Profile
+  - `POST /auth/profile`: Update Profile
+  - `POST /auth/password/change`: Change Password
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
+### Category Routes
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- `GET /admin/categories`: List Categories
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+### Product Routes
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- `GET /articels`: List Articels
+
+
+
+
+## 🛠 Installation
+
+1. **Clone the Repository:**
+
+   ```bash
+   git clone https://github.com/devbigboy4/crocoit-task.git
+   ```
+
+2. **Navigate to the Project Directory:**
+
+   ```bash
+   cd your-repository
+   ```
+
+3. **Install Dependencies:**
+
+   ```bash
+   composer install
+   ```
+
+4. **Set Up Environment File:**
+
+   Copy `.env.example` to `.env` and configure your database and other environment variables.
+
+   ```bash
+   cp .env.example .env
+   ```
+
+5. **Generate Application Key:**
+
+   ```bash
+   php artisan key:generate
+   ```
+
+6. **Run Migrations:**
+
+   ```bash
+   php artisan migrate
+   ```
+
+7. **Start the Development Server:**
+
+   ```bash
+   php artisan serve
+   ```
+
+## 💡 Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your feature or fix.
+3. Make your changes and test thoroughly.
+4. Submit a pull request with a clear description of your changes.
+
+## 📜 License
+
+This project is licensed under the [MIT License](LICENSE).

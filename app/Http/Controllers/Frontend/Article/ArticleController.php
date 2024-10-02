@@ -7,7 +7,6 @@ use App\Http\Requests\Fronend\ArticleStoreRequest;
 use App\Models\Article;
 use App\Models\Category;
 use App\Traits\FileControlTrait;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -96,9 +95,15 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Article $article)
     {
-        return view('frontend.articles.show');
+        $related_articles = Article::where('id', '!=', $article->id)
+            ->where('status', 'active')
+            ->orderby('id', 'DESC')
+            ->limit(4)
+            ->get();
+
+        return view('frontend.articles.show', compact('article','related_articles'));
     }
 
     /**
