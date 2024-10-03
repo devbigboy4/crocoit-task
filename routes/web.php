@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Frontend\Article\ArticleController;
+use App\Http\Controllers\Frontend\Category\CategoryController;
 use App\Http\Controllers\Frontend\Dashboard\DashboardController;
 use App\Http\Controllers\Frontend\MyArticle\ArticleController as MyArticleArticleController;
 use App\Http\Controllers\ProfileController;
@@ -32,6 +33,10 @@ Route::middleware('auth')->group(function () {
 
     /** Create Article */
     Route::resource('articles', ArticleController::class);
+
+    /** Categories */
+
+    Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
 });
 
 require __DIR__.'/admin.php';

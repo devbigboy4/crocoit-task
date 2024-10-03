@@ -47,8 +47,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-$(document).ready(function() {
+$(document).ready(function () {
     $('#categories_ids').select2();
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const dropdownButtons = document.querySelectorAll('[data-dropdown-toggle-two]');
+    dropdownButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const dropdownMenu = document.getElementById(button.getAttribute('data-dropdown-toggle-two'));
+            dropdownMenu.classList.toggle('hidden');
+        });
+    });
 });
 
 
