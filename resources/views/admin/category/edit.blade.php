@@ -67,8 +67,9 @@
 
                                         <select name="parent_id" class="form-control">
                                             @if ($category->parent_id == null)
-                                                <option value="">Primary Category</option>
+                                            <option value="">Primary Category</option>
                                             @endif
+
                                             @foreach ($parents as $parent)
                                                 <option value="{{ $category->id }}" @selected($category->parent_id == $parent->id)>
                                                     {{ $parent->name }} </option>

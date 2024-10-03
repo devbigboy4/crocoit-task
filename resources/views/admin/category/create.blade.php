@@ -54,12 +54,14 @@
                                     <div class="form-group col-md-6 ">
                                         <label>Category</label>
                                         <select name="parent_id" @class(['form-control', 'is-invalid' => $errors->has('parent_id')])>
-                                            <option >Choose Parent Category</option>
+                                            <option>Choose Parent Category</option>
                                             <option value="">Primary Category</option>
 
-                                            @foreach ($categories as $category)
-                                                @include('admin.category.categories._category', ['categories' => $categories, 'depth' => 0])
-                                            @endforeach
+                                            @include('admin.category.categories._category', [
+                                                'categories' => $categories,
+                                                'depth' => 0,
+                                            ])
+
                                         </select>
 
                                         @error('parent_id')

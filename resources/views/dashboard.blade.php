@@ -8,10 +8,21 @@
             <select multiple="multiple" id="categories_ids" name="categories_ids[]"
                 class="block w-1/2 px-4 py-3 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
-                @include('frontend.categories._category', [
+                @if (request()->has(['categories_ids']))
+                    @include('frontend.articles._category_edit', [
                         'categories' => $categories,
                         'depth' => 0,
+                        'selectedCategories' => request()->input('categories_ids', []),
                     ])
+                @endif
+
+
+
+
+                @include('frontend.categories._category', [
+                    'categories' => $categories,
+                    'depth' => 0,
+                ])
 
             </select>
 
@@ -86,13 +97,13 @@
 
                                 @if ($article->user_id == Auth::user()->id)
                                     <li>
-                                        <a href="{{ route('articles.edit', $article->id)}}"
+                                        <a href="{{ route('articles.edit', $article->id) }}"
                                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                             Edit
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('articles.destroy', $article->id)}}"
+                                        <a href="{{ route('articles.destroy', $article->id) }}"
                                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                             Delete
                                         </a>
@@ -100,6 +111,15 @@
                                 @endif
                             </ul>
                         </div>
+                    </div>
+
+                    <div class="px-6 pt-4 pb-2">
+
+                        @foreach ($article->categories as $tag)
+                            <span
+                                class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{{ $tag->name }}</span>
+                        @endforeach
+
                     </div>
                 </div>
             @endforeach
