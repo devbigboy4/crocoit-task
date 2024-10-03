@@ -30,11 +30,14 @@
 
                 <div class="form-group col-md-4 pr-0">
                     <select id="category" name="category" class="form-control">
+
                         <option value="">Search By Parent Categories</option>
-                        @foreach ($parents as $parent)
-                            <option @selected(request()->get('category') == $parent->id) value="{{ $parent->id }}">{{ $parent->name }}
-                            </option>
-                        @endforeach
+
+                        @include('frontend.categories._category', [
+                            'categories' => $categories,
+                            'depth' => 0,
+                        ])
+
                     </select>
 
                 </div>
