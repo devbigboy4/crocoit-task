@@ -7,12 +7,6 @@
             <a href="{{ route('admin.dashboard') }}">St</a>
         </div>
         <ul class="sidebar-menu">
-            <li class="menu-header">Dashboard</li>
-            <li class="dropdown">
-                <a href="{{route('admin.dashboard')}}" class="nav-link has-dropdown">
-                    <i class="fas fa-fire"></i><span>Dashboard</span>
-                </a>
-            </li>
 
             <li class="menu-header">Objects</li>
 
@@ -31,13 +25,7 @@
                 </ul>
             </li>
 
-            <li class="menu-header">Stisla</li>
         </ul>
-
-        <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
-            <a href="https://getstisla.com/docs" class="btn btn-primary btn-lg btn-block btn-icon-split">
-                <i class="fas fa-rocket"></i> Documentation
-            </a>
-        </div>
-    </aside>
+</div>
+</aside>
 </div>
