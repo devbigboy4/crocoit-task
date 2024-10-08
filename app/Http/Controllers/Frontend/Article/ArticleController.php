@@ -148,7 +148,7 @@ class ArticleController extends Controller
 
             if ($request->hasFile('image')) {
                 $this->deleteFile($article->image);
-                $data['data'] = $this->uploadFile($request->file('image'), 'articles');
+                $data['image'] = $this->uploadFile($request->file('image'), 'articles');
             }
 
             $article->update($data);
